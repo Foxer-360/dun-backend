@@ -1,0 +1,897 @@
+# source: http://localhost:4466
+# timestamp: Fri Nov 30 2018 11:50:17 GMT+0100 (CET)
+
+type AggregateGroup {
+  count: Int!
+}
+
+type AggregatePrivilege {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Group implements Node {
+  id: ID!
+  name: String!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
+}
+
+"""A connection to a list of items."""
+type GroupConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [GroupEdge]!
+  aggregate: AggregateGroup!
+}
+
+input GroupCreateInput {
+  name: String!
+  users: UserCreateManyWithoutGroupsInput
+  privileges: PrivilegeCreateManyWithoutGroupsInput
+}
+
+input GroupCreateManyWithoutPrivilegesInput {
+  create: [GroupCreateWithoutPrivilegesInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateManyWithoutUsersInput {
+  create: [GroupCreateWithoutUsersInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateWithoutPrivilegesInput {
+  name: String!
+  users: UserCreateManyWithoutGroupsInput
+}
+
+input GroupCreateWithoutUsersInput {
+  name: String!
+  privileges: PrivilegeCreateManyWithoutGroupsInput
+}
+
+"""An edge in a connection."""
+type GroupEdge {
+  """The item at the end of the edge."""
+  node: Group!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum GroupOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type GroupPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type GroupSubscriptionPayload {
+  mutation: MutationType!
+  node: Group
+  updatedFields: [String!]
+  previousValues: GroupPreviousValues
+}
+
+input GroupSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [GroupSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [GroupSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [GroupSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: GroupWhereInput
+}
+
+input GroupUpdateInput {
+  name: String
+  users: UserUpdateManyWithoutGroupsInput
+  privileges: PrivilegeUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateManyWithoutPrivilegesInput {
+  create: [GroupCreateWithoutPrivilegesInput!]
+  connect: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  delete: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutPrivilegesInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutPrivilegesInput!]
+}
+
+input GroupUpdateManyWithoutUsersInput {
+  create: [GroupCreateWithoutUsersInput!]
+  connect: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  delete: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutUsersInput!]
+}
+
+input GroupUpdateWithoutPrivilegesDataInput {
+  name: String
+  users: UserUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateWithoutUsersDataInput {
+  name: String
+  privileges: PrivilegeUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateWithWhereUniqueWithoutPrivilegesInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutPrivilegesDataInput!
+}
+
+input GroupUpdateWithWhereUniqueWithoutUsersInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutUsersDataInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutPrivilegesInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutPrivilegesDataInput!
+  create: GroupCreateWithoutPrivilegesInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutUsersInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutUsersDataInput!
+  create: GroupCreateWithoutUsersInput!
+}
+
+input GroupWhereInput {
+  """Logical AND on all given filters."""
+  AND: [GroupWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [GroupWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [GroupWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  privileges_every: PrivilegeWhereInput
+  privileges_some: PrivilegeWhereInput
+  privileges_none: PrivilegeWhereInput
+}
+
+input GroupWhereUniqueInput {
+  id: ID
+}
+
+"""Raw JSON value"""
+scalar Json
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  createPrivilege(data: PrivilegeCreateInput!): Privilege!
+  createGroup(data: GroupCreateInput!): Group!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updatePrivilege(data: PrivilegeUpdateInput!, where: PrivilegeWhereUniqueInput!): Privilege
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+  deleteUser(where: UserWhereUniqueInput!): User
+  deletePrivilege(where: PrivilegeWhereUniqueInput!): Privilege
+  deleteGroup(where: GroupWhereUniqueInput!): Group
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertPrivilege(where: PrivilegeWhereUniqueInput!, create: PrivilegeCreateInput!, update: PrivilegeUpdateInput!): Privilege!
+  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyPrivileges(data: PrivilegeUpdateInput!, where: PrivilegeWhereInput): BatchPayload!
+  updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyPrivileges(where: PrivilegeWhereInput): BatchPayload!
+  deleteManyGroups(where: GroupWhereInput): BatchPayload!
+  executeRaw(database: PrismaDatabase, query: String!): Json!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+enum PrismaDatabase {
+  default
+}
+
+type Privilege implements Node {
+  id: ID!
+  name: String!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+"""A connection to a list of items."""
+type PrivilegeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PrivilegeEdge]!
+  aggregate: AggregatePrivilege!
+}
+
+input PrivilegeCreateInput {
+  name: String!
+  groups: GroupCreateManyWithoutPrivilegesInput
+  users: UserCreateManyWithoutPrivilegesInput
+}
+
+input PrivilegeCreateManyWithoutGroupsInput {
+  create: [PrivilegeCreateWithoutGroupsInput!]
+  connect: [PrivilegeWhereUniqueInput!]
+}
+
+input PrivilegeCreateManyWithoutUsersInput {
+  create: [PrivilegeCreateWithoutUsersInput!]
+  connect: [PrivilegeWhereUniqueInput!]
+}
+
+input PrivilegeCreateWithoutGroupsInput {
+  name: String!
+  users: UserCreateManyWithoutPrivilegesInput
+}
+
+input PrivilegeCreateWithoutUsersInput {
+  name: String!
+  groups: GroupCreateManyWithoutPrivilegesInput
+}
+
+"""An edge in a connection."""
+type PrivilegeEdge {
+  """The item at the end of the edge."""
+  node: Privilege!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PrivilegeOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PrivilegePreviousValues {
+  id: ID!
+  name: String!
+}
+
+type PrivilegeSubscriptionPayload {
+  mutation: MutationType!
+  node: Privilege
+  updatedFields: [String!]
+  previousValues: PrivilegePreviousValues
+}
+
+input PrivilegeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PrivilegeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PrivilegeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PrivilegeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PrivilegeWhereInput
+}
+
+input PrivilegeUpdateInput {
+  name: String
+  groups: GroupUpdateManyWithoutPrivilegesInput
+  users: UserUpdateManyWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateManyWithoutGroupsInput {
+  create: [PrivilegeCreateWithoutGroupsInput!]
+  connect: [PrivilegeWhereUniqueInput!]
+  disconnect: [PrivilegeWhereUniqueInput!]
+  delete: [PrivilegeWhereUniqueInput!]
+  update: [PrivilegeUpdateWithWhereUniqueWithoutGroupsInput!]
+  upsert: [PrivilegeUpsertWithWhereUniqueWithoutGroupsInput!]
+}
+
+input PrivilegeUpdateManyWithoutUsersInput {
+  create: [PrivilegeCreateWithoutUsersInput!]
+  connect: [PrivilegeWhereUniqueInput!]
+  disconnect: [PrivilegeWhereUniqueInput!]
+  delete: [PrivilegeWhereUniqueInput!]
+  update: [PrivilegeUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [PrivilegeUpsertWithWhereUniqueWithoutUsersInput!]
+}
+
+input PrivilegeUpdateWithoutGroupsDataInput {
+  name: String
+  users: UserUpdateManyWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateWithoutUsersDataInput {
+  name: String
+  groups: GroupUpdateManyWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateWithWhereUniqueWithoutGroupsInput {
+  where: PrivilegeWhereUniqueInput!
+  data: PrivilegeUpdateWithoutGroupsDataInput!
+}
+
+input PrivilegeUpdateWithWhereUniqueWithoutUsersInput {
+  where: PrivilegeWhereUniqueInput!
+  data: PrivilegeUpdateWithoutUsersDataInput!
+}
+
+input PrivilegeUpsertWithWhereUniqueWithoutGroupsInput {
+  where: PrivilegeWhereUniqueInput!
+  update: PrivilegeUpdateWithoutGroupsDataInput!
+  create: PrivilegeCreateWithoutGroupsInput!
+}
+
+input PrivilegeUpsertWithWhereUniqueWithoutUsersInput {
+  where: PrivilegeWhereUniqueInput!
+  update: PrivilegeUpdateWithoutUsersDataInput!
+  create: PrivilegeCreateWithoutUsersInput!
+}
+
+input PrivilegeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PrivilegeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PrivilegeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PrivilegeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+}
+
+input PrivilegeWhereUniqueInput {
+  id: ID
+}
+
+type Query {
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege]!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  user(where: UserWhereUniqueInput!): User
+  privilege(where: PrivilegeWhereUniqueInput!): Privilege
+  group(where: GroupWhereUniqueInput!): Group
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  privilegesConnection(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PrivilegeConnection!
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  privilege(where: PrivilegeSubscriptionWhereInput): PrivilegeSubscriptionPayload
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+  privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  name: String!
+  privileges: PrivilegeCreateManyWithoutUsersInput
+  groups: GroupCreateManyWithoutUsersInput
+}
+
+input UserCreateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutPrivilegesInput {
+  create: [UserCreateWithoutPrivilegesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateWithoutGroupsInput {
+  name: String!
+  privileges: PrivilegeCreateManyWithoutUsersInput
+}
+
+input UserCreateWithoutPrivilegesInput {
+  name: String!
+  groups: GroupCreateManyWithoutUsersInput
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateInput {
+  name: String
+  privileges: PrivilegeUpdateManyWithoutUsersInput
+  groups: GroupUpdateManyWithoutUsersInput
+}
+
+input UserUpdateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutGroupsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutGroupsInput!]
+}
+
+input UserUpdateManyWithoutPrivilegesInput {
+  create: [UserCreateWithoutPrivilegesInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutPrivilegesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutPrivilegesInput!]
+}
+
+input UserUpdateWithoutGroupsDataInput {
+  name: String
+  privileges: PrivilegeUpdateManyWithoutUsersInput
+}
+
+input UserUpdateWithoutPrivilegesDataInput {
+  name: String
+  groups: GroupUpdateManyWithoutUsersInput
+}
+
+input UserUpdateWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutGroupsDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutPrivilegesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutPrivilegesDataInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutGroupsDataInput!
+  create: UserCreateWithoutGroupsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutPrivilegesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutPrivilegesDataInput!
+  create: UserCreateWithoutPrivilegesInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  privileges_every: PrivilegeWhereInput
+  privileges_some: PrivilegeWhereInput
+  privileges_none: PrivilegeWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+}
