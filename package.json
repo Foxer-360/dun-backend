@@ -1,0 +1,11 @@
+{
+  "name": "dunia-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-voyager": "^1.0.0-rc.26",
+    "graphql-yoga": "^1.16.7",
+    "prisma-binding": "^2.2.8"
+  }
+}

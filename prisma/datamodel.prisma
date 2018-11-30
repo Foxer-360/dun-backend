@@ -1,0 +1,22 @@
+type User {
+  id: ID! @unique
+  name: String!
+  privileges: [Privilege!]!
+  groups: [Group!]!
+}
+
+type Privilege {
+  id: ID! @unique
+  name: String! 
+  groups: [Group!]!
+  users: [User!]!
+}
+
+type Group {
+  id: ID! @unique
+  name: String!
+  users: [User!]!
+  privileges: [Privilege!]!
+}
+
+
