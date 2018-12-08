@@ -10,6 +10,13 @@ type Privilege {
   name: String! 
   groups: [Group!]!
   users: [User!]!
+  actionTypes: [ActionType!]!
+  entity: Entity!
+}
+
+type Entity {
+  name: String!
+  privileges: [Privilege!]!
 }
 
 type Group {
@@ -19,4 +26,8 @@ type Group {
   privileges: [Privilege!]!
 }
 
+type ActionType {
+  name: String!
+  privileges: [Privilege!]!
+}
 

@@ -1,5 +1,167 @@
 # source: http://localhost:4466
-# timestamp: Fri Nov 30 2018 11:50:17 GMT+0100 (CET)
+# timestamp: Sat Dec 08 2018 12:05:29 GMT+0100 (CET)
+
+type ActionType {
+  name: String!
+  privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
+}
+
+"""A connection to a list of items."""
+type ActionTypeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ActionTypeEdge]!
+  aggregate: AggregateActionType!
+}
+
+input ActionTypeCreateInput {
+  name: String!
+  privileges: PrivilegeCreateManyWithoutActionTypesInput
+}
+
+input ActionTypeCreateManyWithoutPrivilegesInput {
+  create: [ActionTypeCreateWithoutPrivilegesInput!]
+}
+
+input ActionTypeCreateWithoutPrivilegesInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type ActionTypeEdge {
+  """The item at the end of the edge."""
+  node: ActionType!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ActionTypeOrderByInput {
+  name_ASC
+  name_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ActionTypePreviousValues {
+  name: String!
+}
+
+type ActionTypeSubscriptionPayload {
+  mutation: MutationType!
+  node: ActionType
+  updatedFields: [String!]
+  previousValues: ActionTypePreviousValues
+}
+
+input ActionTypeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ActionTypeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ActionTypeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ActionTypeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ActionTypeWhereInput
+}
+
+input ActionTypeUpdateInput {
+  name: String
+  privileges: PrivilegeUpdateManyWithoutActionTypesInput
+}
+
+input ActionTypeUpdateManyWithoutPrivilegesInput {
+  create: [ActionTypeCreateWithoutPrivilegesInput!]
+}
+
+input ActionTypeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ActionTypeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ActionTypeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ActionTypeWhereInput!]
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  privileges_every: PrivilegeWhereInput
+  privileges_some: PrivilegeWhereInput
+  privileges_none: PrivilegeWhereInput
+}
+
+type AggregateActionType {
+  count: Int!
+}
+
+type AggregateEntity {
+  count: Int!
+}
 
 type AggregateGroup {
   count: Int!
@@ -16,6 +178,171 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type Entity {
+  name: String!
+  privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
+}
+
+"""A connection to a list of items."""
+type EntityConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EntityEdge]!
+  aggregate: AggregateEntity!
+}
+
+input EntityCreateInput {
+  name: String!
+  privileges: PrivilegeCreateManyWithoutEntityInput
+}
+
+input EntityCreateOneWithoutPrivilegesInput {
+  create: EntityCreateWithoutPrivilegesInput
+}
+
+input EntityCreateWithoutPrivilegesInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type EntityEdge {
+  """The item at the end of the edge."""
+  node: Entity!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EntityOrderByInput {
+  name_ASC
+  name_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EntityPreviousValues {
+  name: String!
+}
+
+type EntitySubscriptionPayload {
+  mutation: MutationType!
+  node: Entity
+  updatedFields: [String!]
+  previousValues: EntityPreviousValues
+}
+
+input EntitySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EntitySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EntitySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EntitySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EntityWhereInput
+}
+
+input EntityUpdateInput {
+  name: String
+  privileges: PrivilegeUpdateManyWithoutEntityInput
+}
+
+input EntityUpdateOneRequiredWithoutPrivilegesInput {
+  create: EntityCreateWithoutPrivilegesInput
+  update: EntityUpdateWithoutPrivilegesDataInput
+  upsert: EntityUpsertWithoutPrivilegesInput
+}
+
+input EntityUpdateWithoutPrivilegesDataInput {
+  name: String
+}
+
+input EntityUpsertWithoutPrivilegesInput {
+  update: EntityUpdateWithoutPrivilegesDataInput!
+  create: EntityCreateWithoutPrivilegesInput!
+}
+
+input EntityWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EntityWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EntityWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EntityWhereInput!]
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  privileges_every: PrivilegeWhereInput
+  privileges_some: PrivilegeWhereInput
+  privileges_none: PrivilegeWhereInput
 }
 
 type Group implements Node {
@@ -294,7 +621,9 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createPrivilege(data: PrivilegeCreateInput!): Privilege!
+  createEntity(data: EntityCreateInput!): Entity!
   createGroup(data: GroupCreateInput!): Group!
+  createActionType(data: ActionTypeCreateInput!): ActionType!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePrivilege(data: PrivilegeUpdateInput!, where: PrivilegeWhereUniqueInput!): Privilege
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
@@ -306,10 +635,14 @@ type Mutation {
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyPrivileges(data: PrivilegeUpdateInput!, where: PrivilegeWhereInput): BatchPayload!
+  updateManyEntities(data: EntityUpdateInput!, where: EntityWhereInput): BatchPayload!
   updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
+  updateManyActionTypes(data: ActionTypeUpdateInput!, where: ActionTypeWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPrivileges(where: PrivilegeWhereInput): BatchPayload!
+  deleteManyEntities(where: EntityWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
+  deleteManyActionTypes(where: ActionTypeWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -349,6 +682,8 @@ type Privilege implements Node {
   name: String!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  actionTypes(where: ActionTypeWhereInput, orderBy: ActionTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionType!]
+  entity(where: EntityWhereInput): Entity!
 }
 
 """A connection to a list of items."""
@@ -365,6 +700,18 @@ input PrivilegeCreateInput {
   name: String!
   groups: GroupCreateManyWithoutPrivilegesInput
   users: UserCreateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeCreateManyWithoutPrivilegesInput
+  entity: EntityCreateOneWithoutPrivilegesInput!
+}
+
+input PrivilegeCreateManyWithoutActionTypesInput {
+  create: [PrivilegeCreateWithoutActionTypesInput!]
+  connect: [PrivilegeWhereUniqueInput!]
+}
+
+input PrivilegeCreateManyWithoutEntityInput {
+  create: [PrivilegeCreateWithoutEntityInput!]
+  connect: [PrivilegeWhereUniqueInput!]
 }
 
 input PrivilegeCreateManyWithoutGroupsInput {
@@ -377,14 +724,32 @@ input PrivilegeCreateManyWithoutUsersInput {
   connect: [PrivilegeWhereUniqueInput!]
 }
 
+input PrivilegeCreateWithoutActionTypesInput {
+  name: String!
+  groups: GroupCreateManyWithoutPrivilegesInput
+  users: UserCreateManyWithoutPrivilegesInput
+  entity: EntityCreateOneWithoutPrivilegesInput!
+}
+
+input PrivilegeCreateWithoutEntityInput {
+  name: String!
+  groups: GroupCreateManyWithoutPrivilegesInput
+  users: UserCreateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeCreateManyWithoutPrivilegesInput
+}
+
 input PrivilegeCreateWithoutGroupsInput {
   name: String!
   users: UserCreateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeCreateManyWithoutPrivilegesInput
+  entity: EntityCreateOneWithoutPrivilegesInput!
 }
 
 input PrivilegeCreateWithoutUsersInput {
   name: String!
   groups: GroupCreateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeCreateManyWithoutPrivilegesInput
+  entity: EntityCreateOneWithoutPrivilegesInput!
 }
 
 """An edge in a connection."""
@@ -455,6 +820,26 @@ input PrivilegeUpdateInput {
   name: String
   groups: GroupUpdateManyWithoutPrivilegesInput
   users: UserUpdateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeUpdateManyWithoutPrivilegesInput
+  entity: EntityUpdateOneRequiredWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateManyWithoutActionTypesInput {
+  create: [PrivilegeCreateWithoutActionTypesInput!]
+  connect: [PrivilegeWhereUniqueInput!]
+  disconnect: [PrivilegeWhereUniqueInput!]
+  delete: [PrivilegeWhereUniqueInput!]
+  update: [PrivilegeUpdateWithWhereUniqueWithoutActionTypesInput!]
+  upsert: [PrivilegeUpsertWithWhereUniqueWithoutActionTypesInput!]
+}
+
+input PrivilegeUpdateManyWithoutEntityInput {
+  create: [PrivilegeCreateWithoutEntityInput!]
+  connect: [PrivilegeWhereUniqueInput!]
+  disconnect: [PrivilegeWhereUniqueInput!]
+  delete: [PrivilegeWhereUniqueInput!]
+  update: [PrivilegeUpdateWithWhereUniqueWithoutEntityInput!]
+  upsert: [PrivilegeUpsertWithWhereUniqueWithoutEntityInput!]
 }
 
 input PrivilegeUpdateManyWithoutGroupsInput {
@@ -475,14 +860,42 @@ input PrivilegeUpdateManyWithoutUsersInput {
   upsert: [PrivilegeUpsertWithWhereUniqueWithoutUsersInput!]
 }
 
+input PrivilegeUpdateWithoutActionTypesDataInput {
+  name: String
+  groups: GroupUpdateManyWithoutPrivilegesInput
+  users: UserUpdateManyWithoutPrivilegesInput
+  entity: EntityUpdateOneRequiredWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateWithoutEntityDataInput {
+  name: String
+  groups: GroupUpdateManyWithoutPrivilegesInput
+  users: UserUpdateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeUpdateManyWithoutPrivilegesInput
+}
+
 input PrivilegeUpdateWithoutGroupsDataInput {
   name: String
   users: UserUpdateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeUpdateManyWithoutPrivilegesInput
+  entity: EntityUpdateOneRequiredWithoutPrivilegesInput
 }
 
 input PrivilegeUpdateWithoutUsersDataInput {
   name: String
   groups: GroupUpdateManyWithoutPrivilegesInput
+  actionTypes: ActionTypeUpdateManyWithoutPrivilegesInput
+  entity: EntityUpdateOneRequiredWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateWithWhereUniqueWithoutActionTypesInput {
+  where: PrivilegeWhereUniqueInput!
+  data: PrivilegeUpdateWithoutActionTypesDataInput!
+}
+
+input PrivilegeUpdateWithWhereUniqueWithoutEntityInput {
+  where: PrivilegeWhereUniqueInput!
+  data: PrivilegeUpdateWithoutEntityDataInput!
 }
 
 input PrivilegeUpdateWithWhereUniqueWithoutGroupsInput {
@@ -493,6 +906,18 @@ input PrivilegeUpdateWithWhereUniqueWithoutGroupsInput {
 input PrivilegeUpdateWithWhereUniqueWithoutUsersInput {
   where: PrivilegeWhereUniqueInput!
   data: PrivilegeUpdateWithoutUsersDataInput!
+}
+
+input PrivilegeUpsertWithWhereUniqueWithoutActionTypesInput {
+  where: PrivilegeWhereUniqueInput!
+  update: PrivilegeUpdateWithoutActionTypesDataInput!
+  create: PrivilegeCreateWithoutActionTypesInput!
+}
+
+input PrivilegeUpsertWithWhereUniqueWithoutEntityInput {
+  where: PrivilegeWhereUniqueInput!
+  update: PrivilegeUpdateWithoutEntityDataInput!
+  create: PrivilegeCreateWithoutEntityInput!
 }
 
 input PrivilegeUpsertWithWhereUniqueWithoutGroupsInput {
@@ -602,6 +1027,10 @@ input PrivilegeWhereInput {
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
+  actionTypes_every: ActionTypeWhereInput
+  actionTypes_some: ActionTypeWhereInput
+  actionTypes_none: ActionTypeWhereInput
+  entity: EntityWhereInput
 }
 
 input PrivilegeWhereUniqueInput {
@@ -611,13 +1040,17 @@ input PrivilegeWhereUniqueInput {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege]!
+  entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  actionTypes(where: ActionTypeWhereInput, orderBy: ActionTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionType]!
   user(where: UserWhereUniqueInput!): User
   privilege(where: PrivilegeWhereUniqueInput!): Privilege
   group(where: GroupWhereUniqueInput!): Group
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   privilegesConnection(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PrivilegeConnection!
+  entitiesConnection(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityConnection!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+  actionTypesConnection(where: ActionTypeWhereInput, orderBy: ActionTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionTypeConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -629,7 +1062,9 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   privilege(where: PrivilegeSubscriptionWhereInput): PrivilegeSubscriptionPayload
+  entity(where: EntitySubscriptionWhereInput): EntitySubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+  actionType(where: ActionTypeSubscriptionWhereInput): ActionTypeSubscriptionPayload
 }
 
 type User implements Node {
