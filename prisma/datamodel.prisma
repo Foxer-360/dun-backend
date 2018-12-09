@@ -2,32 +2,14 @@ type User {
   id: ID! @unique
   name: String!
   privileges: [Privilege!]!
-  groups: [Group!]!
+  actionTypes: [String!]!
 }
 
 type Privilege {
   id: ID! @unique
   name: String! 
-  groups: [Group!]!
   users: [User!]!
-  actionTypes: [ActionType!]!
-  entity: Entity!
-}
-
-type Entity {
-  name: String!
-  privileges: [Privilege!]!
-}
-
-type Group {
-  id: ID! @unique
-  name: String!
-  users: [User!]!
-  privileges: [Privilege!]!
-}
-
-type ActionType {
-  name: String!
+  actionTypes: [String!]!
   privileges: [Privilege!]!
 }
 
