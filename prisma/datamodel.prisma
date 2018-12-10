@@ -3,6 +3,11 @@ type User {
   name: String!
   privileges: [Privilege!]!
   actionTypes: [String!]!
+  identity: String!,
+  auth0id: String!,
+  email: String!,
+  avatar: String!
+
 }
 
 type Privilege {
@@ -12,4 +17,3 @@ type Privilege {
   actionTypes: [String!]!
   privileges: [Privilege!]!
 }
-
