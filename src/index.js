@@ -1,9 +1,12 @@
-const { GraphQLServer } = require('graphql-yoga');
+import { GraphQLServer } from 'graphql-yoga';
 const { Prisma } = require('prisma-binding');
 const { express: voyagerMiddleware } = require('graphql-voyager/middleware');
 const bodyParser = require('body-parser');
 const gql = require('graphql-tag');
-const { checkJwt } = require("./middleware/jwt")
+const path = require('path');
+const { checkJwt } = require("./middleware/jwt");
+require('dotenv').config();
+
 
 async function createPrismaUser(ctx, idToken) {
   const user = await ctx.db.mutation.createUser({
