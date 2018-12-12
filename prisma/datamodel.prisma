@@ -4,7 +4,7 @@ type User {
   privileges: [Privilege!]!
   actionTypes: [String!]!
   identity: String!,
-  auth0id: String!,
+  auth0id: ID! @unique,
   email: String!,
   avatar: String!
 

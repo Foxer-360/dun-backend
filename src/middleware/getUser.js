@@ -5,4 +5,4 @@ const getUser = async (req, res, next, db) => {
   next()
 }
 
-module.exports = { getUser }
+export default getUser;

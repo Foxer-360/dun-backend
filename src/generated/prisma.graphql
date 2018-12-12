@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Mon Dec 10 2018 13:26:46 GMT+0100 (CET)
+# timestamp: Wed Dec 12 2018 14:57:19 GMT+0100 (CET)
 
 type AggregatePrivilege {
   count: Int!
@@ -371,7 +371,7 @@ type User implements Node {
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
   actionTypes: [String!]!
   identity: String!
-  auth0id: String!
+  auth0id: ID!
   email: String!
   avatar: String!
 }
@@ -393,7 +393,7 @@ input UserCreateactionTypesInput {
 input UserCreateInput {
   name: String!
   identity: String!
-  auth0id: String!
+  auth0id: ID!
   email: String!
   avatar: String!
   actionTypes: UserCreateactionTypesInput
@@ -408,7 +408,7 @@ input UserCreateManyWithoutPrivilegesInput {
 input UserCreateWithoutPrivilegesInput {
   name: String!
   identity: String!
-  auth0id: String!
+  auth0id: ID!
   email: String!
   avatar: String!
   actionTypes: UserCreateactionTypesInput
@@ -447,7 +447,7 @@ type UserPreviousValues {
   name: String!
   actionTypes: [String!]!
   identity: String!
-  auth0id: String!
+  auth0id: ID!
   email: String!
   avatar: String!
 }
@@ -498,7 +498,7 @@ input UserUpdateactionTypesInput {
 input UserUpdateInput {
   name: String
   identity: String
-  auth0id: String
+  auth0id: ID
   email: String
   avatar: String
   actionTypes: UserUpdateactionTypesInput
@@ -517,7 +517,7 @@ input UserUpdateManyWithoutPrivilegesInput {
 input UserUpdateWithoutPrivilegesDataInput {
   name: String
   identity: String
-  auth0id: String
+  auth0id: ID
   email: String
   avatar: String
   actionTypes: UserUpdateactionTypesInput
@@ -663,46 +663,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   identity_not_ends_with: String
-  auth0id: String
+  auth0id: ID
 
   """All values that are not equal to given value."""
-  auth0id_not: String
+  auth0id_not: ID
 
   """All values that are contained in given list."""
-  auth0id_in: [String!]
+  auth0id_in: [ID!]
 
   """All values that are not contained in given list."""
-  auth0id_not_in: [String!]
+  auth0id_not_in: [ID!]
 
   """All values less than the given value."""
-  auth0id_lt: String
+  auth0id_lt: ID
 
   """All values less than or equal the given value."""
-  auth0id_lte: String
+  auth0id_lte: ID
 
   """All values greater than the given value."""
-  auth0id_gt: String
+  auth0id_gt: ID
 
   """All values greater than or equal the given value."""
-  auth0id_gte: String
+  auth0id_gte: ID
 
   """All values containing the given string."""
-  auth0id_contains: String
+  auth0id_contains: ID
 
   """All values not containing the given string."""
-  auth0id_not_contains: String
+  auth0id_not_contains: ID
 
   """All values starting with the given string."""
-  auth0id_starts_with: String
+  auth0id_starts_with: ID
 
   """All values not starting with the given string."""
-  auth0id_not_starts_with: String
+  auth0id_not_starts_with: ID
 
   """All values ending with the given string."""
-  auth0id_ends_with: String
+  auth0id_ends_with: ID
 
   """All values not ending with the given string."""
-  auth0id_not_ends_with: String
+  auth0id_not_ends_with: ID
   email: String
 
   """All values that are not equal to given value."""
@@ -790,4 +790,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  auth0id: ID
 }
