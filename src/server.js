@@ -1,13 +1,12 @@
 import { GraphQLServer } from 'graphql-yoga';
 import dotenv from 'dotenv';
+import { Prisma, forwardTo } from 'prisma-binding';
+import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
+import bodyParser from 'body-parser';
+import validateAndParseIdToken from './helpers/validateAndParseIdToken';
+import { checkJwt, getUser } from './middleware';
 
 dotenv.config();
-
-const { Prisma, forwardTo } = require('prisma-binding');
-const { express: voyagerMiddleware } = require('graphql-voyager/middleware');
-const bodyParser = require('body-parser');
-const validateAndParseIdToken = require('./helpers/validateAndParseIdToken');
-const { checkJwt, getUser } = require('./middleware');
 
 async function createPrismaUser(ctx, idToken) {
   const user = await ctx.db.mutation.createUser({
@@ -74,4 +73,6 @@ server.express.post(
   },
 );
 server.express.post(server.options.endpoint, (req, res, next) => getUser(req, res, next, db));
+
+// eslint-disable-next-line no-console
 server.start(() => console.log('GraphQL server is running on http://localhost:4000'));

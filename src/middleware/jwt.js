@@ -1,5 +1,5 @@
-const jwt = require('express-jwt')
-const jwksRsa = require('jwks-rsa')
+import jwt from 'express-jwt';
+import jwksRsa from 'jwks-rsa';
 
 // Authentication middleware. When used, the
 // if the access token exists, it be verified against
@@ -13,14 +13,14 @@ const checkJwt = jwt({
     rateLimit: true,
     jwksRequestsPerMinute: 1,
     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
-    secret: `2O5ou72z0LQFzfmuc-NTrM5Lq8h85wZzwTYR8azXaId-UB8DW24VsDtVdsMCX4U7`
+    secret: '2O5ou72z0LQFzfmuc-NTrM5Lq8h85wZzwTYR8azXaId-UB8DW24VsDtVdsMCX4U7',
   }),
 
   // Validate the audience and the issuer.
   credentialsRequired: false,
   audience: process.env.AUTH0_AUDIENCE,
   issuer: process.env.AUTH0_ISSUER,
-  algorithms: [`RS256`]
-})
+  algorithms: ['RS256'],
+});
 
 export default checkJwt;
