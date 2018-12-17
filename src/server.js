@@ -1,26 +1,25 @@
 import { GraphQLServer } from 'graphql-yoga';
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
 
-const validateAndParseIdToken = require('./helpers/validateAndParseIdToken');
+dotenv.config();
+
 const { Prisma, forwardTo } = require('prisma-binding');
 const { express: voyagerMiddleware } = require('graphql-voyager/middleware');
 const bodyParser = require('body-parser');
-const gql = require('graphql-tag');
-const path = require('path');
-const { checkJwt, getUser } = require("./middleware");
+const validateAndParseIdToken = require('./helpers/validateAndParseIdToken');
+const { checkJwt, getUser } = require('./middleware');
 
 async function createPrismaUser(ctx, idToken) {
   const user = await ctx.db.mutation.createUser({
     data: {
-      identity: idToken.sub.split(`|`)[0],
-      auth0id: idToken.sub.split(`|`)[1],
+      identity: idToken.sub.split('|')[0],
+      auth0id: idToken.sub.split('|')[1],
       name: idToken.name,
       email: idToken.email,
-      avatar: idToken.picture
-    }
-  })
-  return user
+      avatar: idToken.picture,
+    },
+  });
+  return user;
 }
 
 const resolvers = {
@@ -30,24 +29,24 @@ const resolvers = {
   },
   Mutation: {
     async authenticate(parent, { idToken }, ctx, info) {
-      let userToken = null
+      let userToken = null;
       try {
-        userToken = await validateAndParseIdToken(idToken)
+        userToken = await validateAndParseIdToken(idToken);
       } catch (err) {
-        throw new Error(err.message)
+        throw new Error(err.message);
       }
-      const auth0id = userToken.sub.split("|")[1]
-      let user = await ctx.db.query.user({ where: { auth0id } }, info)
+      const auth0id = userToken.sub.split('|')[1];
+      let user = await ctx.db.query.user({ where: { auth0id } }, info);
       if (!user) {
-        user = createPrismaUser(ctx, userToken)
+        user = createPrismaUser(ctx, userToken);
       }
-      return user
+      return user;
     },
     createPrivilege: forwardTo('db'),
     updatePrivilege: forwardTo('db'),
     createUser: forwardTo('db'),
     updateUser: forwardTo('db'),
-  }
+  },
 };
 
 const db = new Prisma({
@@ -60,8 +59,8 @@ const server = new GraphQLServer({
   resolvers,
   context: req => ({
     ...req,
-    db
-  })
+    db,
+  }),
 });
 
 server.express.use(bodyParser.json());
@@ -70,11 +69,9 @@ server.express.post(
   server.options.endpoint,
   checkJwt,
   (err, req, res, next) => {
-    if (err) return res.status(401).send(err.message)
-    next()
-  }
-)
-server.express.post(server.options.endpoint, (req, res, next) =>
-  getUser(req, res, next, db)
-)
-server.start(() => console.log(`GraphQL server is running on http://localhost:4000`));
+    if (err) return res.status(401).send(err.message);
+    return next();
+  },
+);
+server.express.post(server.options.endpoint, (req, res, next) => getUser(req, res, next, db));
+server.start(() => console.log('GraphQL server is running on http://localhost:4000'));
