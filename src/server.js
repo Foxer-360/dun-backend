@@ -1,12 +1,10 @@
 import { GraphQLServer } from 'graphql-yoga';
-import dotenv from 'dotenv';
+import {} from 'dotenv/config';
 import { Prisma, forwardTo } from 'prisma-binding';
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 import bodyParser from 'body-parser';
 import validateAndParseIdToken from './helpers/validateAndParseIdToken';
-import { checkJwt, getUser } from './middleware';
-
-dotenv.config();
+import { checkJwt, storeUserToRequest } from './middleware';
 
 async function createPrismaUser(ctx, idToken) {
   const user = await ctx.db.mutation.createUser({
@@ -25,9 +23,7 @@ const resolvers = {
   Query: {
     users: forwardTo('db'),
     privileges: forwardTo('db'),
-  },
-  Mutation: {
-    async authenticate(parent, { idToken }, ctx, info) {
+    hasUserPermission: async (parent, { idToken, gqlOperation }, context, info) => {
       let userToken = null;
       try {
         userToken = await validateAndParseIdToken(idToken);
@@ -35,9 +31,52 @@ const resolvers = {
         throw new Error(err.message);
       }
       const auth0id = userToken.sub.split('|')[1];
-      let user = await ctx.db.query.user({ where: { auth0id } }, info);
+      let user = await context.db.query.user({ where: { auth0id } },`{
+        id
+        name
+        privileges {
+          id
+          name
+          actionTypes
+        }
+        actionTypes
+        avatar
+      }`);
       if (!user) {
-        user = createPrismaUser(ctx, userToken);
+        user = createPrismaUser(context, userToken);
+      }
+
+      // Checking based on request token, if is action permitted to user
+      if (
+        !gqlOperation.selectionSet.selections
+          .some(selection => !user.actionTypes
+            .includes(selection.name.value))) {
+        return true;
+      }
+
+      // Checking based on request token, if is action permitted to some privilege of user
+      if (
+        !gqlOperation.selectionSet.selections
+          .some(selection => !user.privileges.some(privilege => privilege.actionTypes
+            .includes(selection.name.value)))) {
+        return true;
+      }
+
+      return false;
+    },
+  },
+  Mutation: {
+    async authenticate(parent, { idToken }, context, info) {
+      let userToken = null;
+      try {
+        userToken = await validateAndParseIdToken(idToken);
+      } catch (err) {
+        throw new Error(err.message);
+      }
+      const auth0id = userToken.sub.split('|')[1];
+      let user = await context.db.query.user({ where: { auth0id } }, info);
+      if (!user) {
+        user = createPrismaUser(context, userToken);
       }
       return user;
     },
@@ -60,6 +99,8 @@ const server = new GraphQLServer({
     ...req,
     db,
   }),
+  middlewares: [
+  ],
 });
 
 server.express.use(bodyParser.json());
@@ -72,7 +113,11 @@ server.express.post(
     return next();
   },
 );
-server.express.post(server.options.endpoint, (req, res, next) => getUser(req, res, next, db));
+
+server.express.post(
+  server.options.endpoint,
+  (req, res, next) => storeUserToRequest(req, res, next, db),
+);
 
 // eslint-disable-next-line no-console
 server.start(() => console.log('GraphQL server is running on http://localhost:4000'));

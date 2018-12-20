@@ -15,5 +15,6 @@ type Privilege {
   name: String! 
   users: [User!]!
   actionTypes: [String!]!
-  privileges: [Privilege!]!
+  privileges: [Privilege!]! @relation(name: "PrivilegeRelationship")
+  parent: Privilege @relation(name: "PrivilegeRelationship")
 }

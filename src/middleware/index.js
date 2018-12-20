@@ -1,7 +1,7 @@
-import getUser from './getUser';
 import checkJwt from './jwt';
+import storeUserToRequest from './storeUserToRequest';
 
 export {
-  getUser,
-  checkJwt
+  checkJwt,
+  storeUserToRequest,
 };

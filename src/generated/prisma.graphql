@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Dec 12 2018 14:57:19 GMT+0100 (CET)
+# timestamp: Wed Dec 19 2018 17:46:08 GMT+0100 (CET)
 
 type AggregatePrivilege {
   count: Int!
@@ -76,6 +76,7 @@ type Privilege implements Node {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   actionTypes: [String!]!
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
+  parent(where: PrivilegeWhereInput): Privilege
 }
 
 """A connection to a list of items."""
@@ -96,11 +97,12 @@ input PrivilegeCreateInput {
   name: String!
   actionTypes: PrivilegeCreateactionTypesInput
   users: UserCreateManyWithoutPrivilegesInput
-  privileges: PrivilegeCreateManyInput
+  privileges: PrivilegeCreateManyWithoutParentInput
+  parent: PrivilegeCreateOneWithoutPrivilegesInput
 }
 
-input PrivilegeCreateManyInput {
-  create: [PrivilegeCreateInput!]
+input PrivilegeCreateManyWithoutParentInput {
+  create: [PrivilegeCreateWithoutParentInput!]
   connect: [PrivilegeWhereUniqueInput!]
 }
 
@@ -109,10 +111,30 @@ input PrivilegeCreateManyWithoutUsersInput {
   connect: [PrivilegeWhereUniqueInput!]
 }
 
+input PrivilegeCreateOneWithoutPrivilegesInput {
+  create: PrivilegeCreateWithoutPrivilegesInput
+  connect: PrivilegeWhereUniqueInput
+}
+
+input PrivilegeCreateWithoutParentInput {
+  name: String!
+  actionTypes: PrivilegeCreateactionTypesInput
+  users: UserCreateManyWithoutPrivilegesInput
+  privileges: PrivilegeCreateManyWithoutParentInput
+}
+
+input PrivilegeCreateWithoutPrivilegesInput {
+  name: String!
+  actionTypes: PrivilegeCreateactionTypesInput
+  users: UserCreateManyWithoutPrivilegesInput
+  parent: PrivilegeCreateOneWithoutPrivilegesInput
+}
+
 input PrivilegeCreateWithoutUsersInput {
   name: String!
   actionTypes: PrivilegeCreateactionTypesInput
-  privileges: PrivilegeCreateManyInput
+  privileges: PrivilegeCreateManyWithoutParentInput
+  parent: PrivilegeCreateOneWithoutPrivilegesInput
 }
 
 """An edge in a connection."""
@@ -184,27 +206,21 @@ input PrivilegeUpdateactionTypesInput {
   set: [String!]
 }
 
-input PrivilegeUpdateDataInput {
-  name: String
-  actionTypes: PrivilegeUpdateactionTypesInput
-  users: UserUpdateManyWithoutPrivilegesInput
-  privileges: PrivilegeUpdateManyInput
-}
-
 input PrivilegeUpdateInput {
   name: String
   actionTypes: PrivilegeUpdateactionTypesInput
   users: UserUpdateManyWithoutPrivilegesInput
-  privileges: PrivilegeUpdateManyInput
+  privileges: PrivilegeUpdateManyWithoutParentInput
+  parent: PrivilegeUpdateOneWithoutPrivilegesInput
 }
 
-input PrivilegeUpdateManyInput {
-  create: [PrivilegeCreateInput!]
+input PrivilegeUpdateManyWithoutParentInput {
+  create: [PrivilegeCreateWithoutParentInput!]
   connect: [PrivilegeWhereUniqueInput!]
   disconnect: [PrivilegeWhereUniqueInput!]
   delete: [PrivilegeWhereUniqueInput!]
-  update: [PrivilegeUpdateWithWhereUniqueNestedInput!]
-  upsert: [PrivilegeUpsertWithWhereUniqueNestedInput!]
+  update: [PrivilegeUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [PrivilegeUpsertWithWhereUniqueWithoutParentInput!]
 }
 
 input PrivilegeUpdateManyWithoutUsersInput {
@@ -216,15 +232,39 @@ input PrivilegeUpdateManyWithoutUsersInput {
   upsert: [PrivilegeUpsertWithWhereUniqueWithoutUsersInput!]
 }
 
+input PrivilegeUpdateOneWithoutPrivilegesInput {
+  create: PrivilegeCreateWithoutPrivilegesInput
+  connect: PrivilegeWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PrivilegeUpdateWithoutPrivilegesDataInput
+  upsert: PrivilegeUpsertWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateWithoutParentDataInput {
+  name: String
+  actionTypes: PrivilegeUpdateactionTypesInput
+  users: UserUpdateManyWithoutPrivilegesInput
+  privileges: PrivilegeUpdateManyWithoutParentInput
+}
+
+input PrivilegeUpdateWithoutPrivilegesDataInput {
+  name: String
+  actionTypes: PrivilegeUpdateactionTypesInput
+  users: UserUpdateManyWithoutPrivilegesInput
+  parent: PrivilegeUpdateOneWithoutPrivilegesInput
+}
+
 input PrivilegeUpdateWithoutUsersDataInput {
   name: String
   actionTypes: PrivilegeUpdateactionTypesInput
-  privileges: PrivilegeUpdateManyInput
+  privileges: PrivilegeUpdateManyWithoutParentInput
+  parent: PrivilegeUpdateOneWithoutPrivilegesInput
 }
 
-input PrivilegeUpdateWithWhereUniqueNestedInput {
+input PrivilegeUpdateWithWhereUniqueWithoutParentInput {
   where: PrivilegeWhereUniqueInput!
-  data: PrivilegeUpdateDataInput!
+  data: PrivilegeUpdateWithoutParentDataInput!
 }
 
 input PrivilegeUpdateWithWhereUniqueWithoutUsersInput {
@@ -232,10 +272,15 @@ input PrivilegeUpdateWithWhereUniqueWithoutUsersInput {
   data: PrivilegeUpdateWithoutUsersDataInput!
 }
 
-input PrivilegeUpsertWithWhereUniqueNestedInput {
+input PrivilegeUpsertWithoutPrivilegesInput {
+  update: PrivilegeUpdateWithoutPrivilegesDataInput!
+  create: PrivilegeCreateWithoutPrivilegesInput!
+}
+
+input PrivilegeUpsertWithWhereUniqueWithoutParentInput {
   where: PrivilegeWhereUniqueInput!
-  update: PrivilegeUpdateDataInput!
-  create: PrivilegeCreateInput!
+  update: PrivilegeUpdateWithoutParentDataInput!
+  create: PrivilegeCreateWithoutParentInput!
 }
 
 input PrivilegeUpsertWithWhereUniqueWithoutUsersInput {
@@ -339,6 +384,7 @@ input PrivilegeWhereInput {
   privileges_every: PrivilegeWhereInput
   privileges_some: PrivilegeWhereInput
   privileges_none: PrivilegeWhereInput
+  parent: PrivilegeWhereInput
 }
 
 input PrivilegeWhereUniqueInput {
