@@ -3,7 +3,7 @@
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege]!
-  hasUserPermission(idToken: String!, gqlOperation: Json!): Boolean
+  hasUserPermission(idToken: String, isUserAnonymous: Boolean, gqlOperation: Json!): Boolean
 }
 
 type Mutation {

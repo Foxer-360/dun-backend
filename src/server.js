@@ -23,15 +23,10 @@ const resolvers = {
   Query: {
     users: forwardTo('db'),
     privileges: forwardTo('db'),
-    hasUserPermission: async (parent, { idToken, gqlOperation }, context, info) => {
+    hasUserPermission: async (parent, { idToken, isUserAnonymous, gqlOperation }, context, info) => {
       let userToken = null;
-      try {
-        userToken = await validateAndParseIdToken(idToken);
-      } catch (err) {
-        throw new Error(err.message);
-      }
-      const auth0id = userToken.sub.split('|')[1];
-      let user = await context.db.query.user({ where: { auth0id } },`{
+      let user = null;
+      const userQuery = `{
         id
         name
         privileges {
@@ -41,10 +36,26 @@ const resolvers = {
         }
         actionTypes
         avatar
-      }`);
-      if (!user) {
-        user = createPrismaUser(context, userToken);
+      }`;
+
+      if (isUserAnonymous) {
+        user = await context.db.query.user({ where: { auth0id: 'ANONYMOUS' } }, userQuery);
+      } else {
+        try {
+          userToken = await validateAndParseIdToken(idToken);
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err.message);
+          throw new Error('Invalid id token.');
+        }
+        const { 1: auth0id } = userToken.sub.split('|');
+
+        user = await context.db.query.user({ where: { auth0id } }, userQuery);
+        if (!user) {
+          user = createPrismaUser(context, userToken);
+        }
       }
+
 
       // Checking based on request token, if is action permitted to user
       if (
