@@ -1,7 +1,7 @@
 import createPrismaUser from './createPrismaUser';
-import validateAndParseIdToken from './validateAndParseIdToken';
+import validateAndParseToken from './validateAndParseToken';
 
 export {
   createPrismaUser,
-  validateAndParseIdToken,
+  validateAndParseToken,
 };
