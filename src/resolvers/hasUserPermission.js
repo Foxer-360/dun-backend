@@ -1,9 +1,8 @@
 import {
   validateAndParseIdToken,
-  createPrismaUser,
 } from '../helpers';
 
-export default async (parent, { idToken, isUserAnonymous, gqlOperation }, context) => {
+export default async (parent, { token, isUserAnonymous, gqlOperation }, context) => {
   let userToken = null;
   let user = null;
   const userQuery = `{
@@ -22,7 +21,7 @@ export default async (parent, { idToken, isUserAnonymous, gqlOperation }, contex
     user = await context.db.query.user({ where: { auth0id: 'ANONYMOUS' } }, userQuery);
   } else {
     try {
-      userToken = await validateAndParseIdToken(idToken);
+      userToken = await validateAndParseIdToken(token);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err.message);
@@ -31,9 +30,6 @@ export default async (parent, { idToken, isUserAnonymous, gqlOperation }, contex
     const { 1: auth0id } = userToken.sub.split('|');
 
     user = await context.db.query.user({ where: { auth0id } }, userQuery);
-    if (!user) {
-      user = createPrismaUser(context, userToken);
-    }
   }
 
 
