@@ -31,19 +31,17 @@ export default async (parent, { token, isUserAnonymous, gqlOperation }, context)
 
     user = await context.db.query.user({ where: { auth0id } }, userQuery);
   }
-
-
   // Checking based on request token, if is action permitted to user
-  if (
-    !gqlOperation.selectionSet.selections
+  if (user
+    && !gqlOperation.selectionSet.selections
       .some(selection => !user.actionTypes
         .includes(selection.name.value))) {
     return true;
   }
 
   // Checking based on request token, if is action permitted to some privilege of user
-  if (
-    !gqlOperation.selectionSet.selections
+  if (user
+    && !gqlOperation.selectionSet.selections
       .some(selection => !user.privileges.some(privilege => privilege.actionTypes
         .includes(selection.name.value)))) {
     return true;

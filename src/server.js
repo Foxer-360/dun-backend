@@ -45,6 +45,7 @@ const resolvers = {
     updatePrivilege: forwardTo('db'),
     createUser: forwardTo('db'),
     updateUser: forwardTo('db'),
+    deleteUser: forwardTo('db'),
   },
 };
 
