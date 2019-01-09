@@ -1,9 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri Nov 30 2018 11:50:17 GMT+0100 (CET)
-
-type AggregateGroup {
-  count: Int!
-}
+# timestamp: Wed Dec 19 2018 17:46:08 GMT+0100 (CET)
 
 type AggregatePrivilege {
   count: Int!
@@ -18,270 +14,6 @@ type BatchPayload {
   count: Long!
 }
 
-type Group implements Node {
-  id: ID!
-  name: String!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
-}
-
-"""A connection to a list of items."""
-type GroupConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [GroupEdge]!
-  aggregate: AggregateGroup!
-}
-
-input GroupCreateInput {
-  name: String!
-  users: UserCreateManyWithoutGroupsInput
-  privileges: PrivilegeCreateManyWithoutGroupsInput
-}
-
-input GroupCreateManyWithoutPrivilegesInput {
-  create: [GroupCreateWithoutPrivilegesInput!]
-  connect: [GroupWhereUniqueInput!]
-}
-
-input GroupCreateManyWithoutUsersInput {
-  create: [GroupCreateWithoutUsersInput!]
-  connect: [GroupWhereUniqueInput!]
-}
-
-input GroupCreateWithoutPrivilegesInput {
-  name: String!
-  users: UserCreateManyWithoutGroupsInput
-}
-
-input GroupCreateWithoutUsersInput {
-  name: String!
-  privileges: PrivilegeCreateManyWithoutGroupsInput
-}
-
-"""An edge in a connection."""
-type GroupEdge {
-  """The item at the end of the edge."""
-  node: Group!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum GroupOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type GroupPreviousValues {
-  id: ID!
-  name: String!
-}
-
-type GroupSubscriptionPayload {
-  mutation: MutationType!
-  node: Group
-  updatedFields: [String!]
-  previousValues: GroupPreviousValues
-}
-
-input GroupSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [GroupSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [GroupSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [GroupSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: GroupWhereInput
-}
-
-input GroupUpdateInput {
-  name: String
-  users: UserUpdateManyWithoutGroupsInput
-  privileges: PrivilegeUpdateManyWithoutGroupsInput
-}
-
-input GroupUpdateManyWithoutPrivilegesInput {
-  create: [GroupCreateWithoutPrivilegesInput!]
-  connect: [GroupWhereUniqueInput!]
-  disconnect: [GroupWhereUniqueInput!]
-  delete: [GroupWhereUniqueInput!]
-  update: [GroupUpdateWithWhereUniqueWithoutPrivilegesInput!]
-  upsert: [GroupUpsertWithWhereUniqueWithoutPrivilegesInput!]
-}
-
-input GroupUpdateManyWithoutUsersInput {
-  create: [GroupCreateWithoutUsersInput!]
-  connect: [GroupWhereUniqueInput!]
-  disconnect: [GroupWhereUniqueInput!]
-  delete: [GroupWhereUniqueInput!]
-  update: [GroupUpdateWithWhereUniqueWithoutUsersInput!]
-  upsert: [GroupUpsertWithWhereUniqueWithoutUsersInput!]
-}
-
-input GroupUpdateWithoutPrivilegesDataInput {
-  name: String
-  users: UserUpdateManyWithoutGroupsInput
-}
-
-input GroupUpdateWithoutUsersDataInput {
-  name: String
-  privileges: PrivilegeUpdateManyWithoutGroupsInput
-}
-
-input GroupUpdateWithWhereUniqueWithoutPrivilegesInput {
-  where: GroupWhereUniqueInput!
-  data: GroupUpdateWithoutPrivilegesDataInput!
-}
-
-input GroupUpdateWithWhereUniqueWithoutUsersInput {
-  where: GroupWhereUniqueInput!
-  data: GroupUpdateWithoutUsersDataInput!
-}
-
-input GroupUpsertWithWhereUniqueWithoutPrivilegesInput {
-  where: GroupWhereUniqueInput!
-  update: GroupUpdateWithoutPrivilegesDataInput!
-  create: GroupCreateWithoutPrivilegesInput!
-}
-
-input GroupUpsertWithWhereUniqueWithoutUsersInput {
-  where: GroupWhereUniqueInput!
-  update: GroupUpdateWithoutUsersDataInput!
-  create: GroupCreateWithoutUsersInput!
-}
-
-input GroupWhereInput {
-  """Logical AND on all given filters."""
-  AND: [GroupWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [GroupWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [GroupWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  users_every: UserWhereInput
-  users_some: UserWhereInput
-  users_none: UserWhereInput
-  privileges_every: PrivilegeWhereInput
-  privileges_some: PrivilegeWhereInput
-  privileges_none: PrivilegeWhereInput
-}
-
-input GroupWhereUniqueInput {
-  id: ID
-}
-
 """Raw JSON value"""
 scalar Json
 
@@ -294,22 +26,16 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createPrivilege(data: PrivilegeCreateInput!): Privilege!
-  createGroup(data: GroupCreateInput!): Group!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePrivilege(data: PrivilegeUpdateInput!, where: PrivilegeWhereUniqueInput!): Privilege
-  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   deleteUser(where: UserWhereUniqueInput!): User
   deletePrivilege(where: PrivilegeWhereUniqueInput!): Privilege
-  deleteGroup(where: GroupWhereUniqueInput!): Group
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPrivilege(where: PrivilegeWhereUniqueInput!, create: PrivilegeCreateInput!, update: PrivilegeUpdateInput!): Privilege!
-  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyPrivileges(data: PrivilegeUpdateInput!, where: PrivilegeWhereInput): BatchPayload!
-  updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPrivileges(where: PrivilegeWhereInput): BatchPayload!
-  deleteManyGroups(where: GroupWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -347,8 +73,10 @@ enum PrismaDatabase {
 type Privilege implements Node {
   id: ID!
   name: String!
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  actionTypes: [String!]!
+  privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
+  parent(where: PrivilegeWhereInput): Privilege
 }
 
 """A connection to a list of items."""
@@ -361,14 +89,20 @@ type PrivilegeConnection {
   aggregate: AggregatePrivilege!
 }
 
-input PrivilegeCreateInput {
-  name: String!
-  groups: GroupCreateManyWithoutPrivilegesInput
-  users: UserCreateManyWithoutPrivilegesInput
+input PrivilegeCreateactionTypesInput {
+  set: [String!]
 }
 
-input PrivilegeCreateManyWithoutGroupsInput {
-  create: [PrivilegeCreateWithoutGroupsInput!]
+input PrivilegeCreateInput {
+  name: String!
+  actionTypes: PrivilegeCreateactionTypesInput
+  users: UserCreateManyWithoutPrivilegesInput
+  privileges: PrivilegeCreateManyWithoutParentInput
+  parent: PrivilegeCreateOneWithoutPrivilegesInput
+}
+
+input PrivilegeCreateManyWithoutParentInput {
+  create: [PrivilegeCreateWithoutParentInput!]
   connect: [PrivilegeWhereUniqueInput!]
 }
 
@@ -377,14 +111,30 @@ input PrivilegeCreateManyWithoutUsersInput {
   connect: [PrivilegeWhereUniqueInput!]
 }
 
-input PrivilegeCreateWithoutGroupsInput {
+input PrivilegeCreateOneWithoutPrivilegesInput {
+  create: PrivilegeCreateWithoutPrivilegesInput
+  connect: PrivilegeWhereUniqueInput
+}
+
+input PrivilegeCreateWithoutParentInput {
   name: String!
+  actionTypes: PrivilegeCreateactionTypesInput
   users: UserCreateManyWithoutPrivilegesInput
+  privileges: PrivilegeCreateManyWithoutParentInput
+}
+
+input PrivilegeCreateWithoutPrivilegesInput {
+  name: String!
+  actionTypes: PrivilegeCreateactionTypesInput
+  users: UserCreateManyWithoutPrivilegesInput
+  parent: PrivilegeCreateOneWithoutPrivilegesInput
 }
 
 input PrivilegeCreateWithoutUsersInput {
   name: String!
-  groups: GroupCreateManyWithoutPrivilegesInput
+  actionTypes: PrivilegeCreateactionTypesInput
+  privileges: PrivilegeCreateManyWithoutParentInput
+  parent: PrivilegeCreateOneWithoutPrivilegesInput
 }
 
 """An edge in a connection."""
@@ -410,6 +160,7 @@ enum PrivilegeOrderByInput {
 type PrivilegePreviousValues {
   id: ID!
   name: String!
+  actionTypes: [String!]!
 }
 
 type PrivilegeSubscriptionPayload {
@@ -451,19 +202,25 @@ input PrivilegeSubscriptionWhereInput {
   node: PrivilegeWhereInput
 }
 
-input PrivilegeUpdateInput {
-  name: String
-  groups: GroupUpdateManyWithoutPrivilegesInput
-  users: UserUpdateManyWithoutPrivilegesInput
+input PrivilegeUpdateactionTypesInput {
+  set: [String!]
 }
 
-input PrivilegeUpdateManyWithoutGroupsInput {
-  create: [PrivilegeCreateWithoutGroupsInput!]
+input PrivilegeUpdateInput {
+  name: String
+  actionTypes: PrivilegeUpdateactionTypesInput
+  users: UserUpdateManyWithoutPrivilegesInput
+  privileges: PrivilegeUpdateManyWithoutParentInput
+  parent: PrivilegeUpdateOneWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateManyWithoutParentInput {
+  create: [PrivilegeCreateWithoutParentInput!]
   connect: [PrivilegeWhereUniqueInput!]
   disconnect: [PrivilegeWhereUniqueInput!]
   delete: [PrivilegeWhereUniqueInput!]
-  update: [PrivilegeUpdateWithWhereUniqueWithoutGroupsInput!]
-  upsert: [PrivilegeUpsertWithWhereUniqueWithoutGroupsInput!]
+  update: [PrivilegeUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [PrivilegeUpsertWithWhereUniqueWithoutParentInput!]
 }
 
 input PrivilegeUpdateManyWithoutUsersInput {
@@ -475,19 +232,39 @@ input PrivilegeUpdateManyWithoutUsersInput {
   upsert: [PrivilegeUpsertWithWhereUniqueWithoutUsersInput!]
 }
 
-input PrivilegeUpdateWithoutGroupsDataInput {
+input PrivilegeUpdateOneWithoutPrivilegesInput {
+  create: PrivilegeCreateWithoutPrivilegesInput
+  connect: PrivilegeWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PrivilegeUpdateWithoutPrivilegesDataInput
+  upsert: PrivilegeUpsertWithoutPrivilegesInput
+}
+
+input PrivilegeUpdateWithoutParentDataInput {
   name: String
+  actionTypes: PrivilegeUpdateactionTypesInput
   users: UserUpdateManyWithoutPrivilegesInput
+  privileges: PrivilegeUpdateManyWithoutParentInput
+}
+
+input PrivilegeUpdateWithoutPrivilegesDataInput {
+  name: String
+  actionTypes: PrivilegeUpdateactionTypesInput
+  users: UserUpdateManyWithoutPrivilegesInput
+  parent: PrivilegeUpdateOneWithoutPrivilegesInput
 }
 
 input PrivilegeUpdateWithoutUsersDataInput {
   name: String
-  groups: GroupUpdateManyWithoutPrivilegesInput
+  actionTypes: PrivilegeUpdateactionTypesInput
+  privileges: PrivilegeUpdateManyWithoutParentInput
+  parent: PrivilegeUpdateOneWithoutPrivilegesInput
 }
 
-input PrivilegeUpdateWithWhereUniqueWithoutGroupsInput {
+input PrivilegeUpdateWithWhereUniqueWithoutParentInput {
   where: PrivilegeWhereUniqueInput!
-  data: PrivilegeUpdateWithoutGroupsDataInput!
+  data: PrivilegeUpdateWithoutParentDataInput!
 }
 
 input PrivilegeUpdateWithWhereUniqueWithoutUsersInput {
@@ -495,10 +272,15 @@ input PrivilegeUpdateWithWhereUniqueWithoutUsersInput {
   data: PrivilegeUpdateWithoutUsersDataInput!
 }
 
-input PrivilegeUpsertWithWhereUniqueWithoutGroupsInput {
+input PrivilegeUpsertWithoutPrivilegesInput {
+  update: PrivilegeUpdateWithoutPrivilegesDataInput!
+  create: PrivilegeCreateWithoutPrivilegesInput!
+}
+
+input PrivilegeUpsertWithWhereUniqueWithoutParentInput {
   where: PrivilegeWhereUniqueInput!
-  update: PrivilegeUpdateWithoutGroupsDataInput!
-  create: PrivilegeCreateWithoutGroupsInput!
+  update: PrivilegeUpdateWithoutParentDataInput!
+  create: PrivilegeCreateWithoutParentInput!
 }
 
 input PrivilegeUpsertWithWhereUniqueWithoutUsersInput {
@@ -596,12 +378,13 @@ input PrivilegeWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  groups_every: GroupWhereInput
-  groups_some: GroupWhereInput
-  groups_none: GroupWhereInput
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
+  privileges_every: PrivilegeWhereInput
+  privileges_some: PrivilegeWhereInput
+  privileges_none: PrivilegeWhereInput
+  parent: PrivilegeWhereInput
 }
 
 input PrivilegeWhereUniqueInput {
@@ -611,13 +394,10 @@ input PrivilegeWhereUniqueInput {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege]!
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   user(where: UserWhereUniqueInput!): User
   privilege(where: PrivilegeWhereUniqueInput!): Privilege
-  group(where: GroupWhereUniqueInput!): Group
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   privilegesConnection(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PrivilegeConnection!
-  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -629,14 +409,17 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   privilege(where: PrivilegeSubscriptionWhereInput): PrivilegeSubscriptionPayload
-  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
 }
 
 type User implements Node {
   id: ID!
   name: String!
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  actionTypes: [String!]!
+  identity: String!
+  auth0id: ID!
+  email: String!
+  avatar: String!
 }
 
 """A connection to a list of items."""
@@ -649,15 +432,18 @@ type UserConnection {
   aggregate: AggregateUser!
 }
 
-input UserCreateInput {
-  name: String!
-  privileges: PrivilegeCreateManyWithoutUsersInput
-  groups: GroupCreateManyWithoutUsersInput
+input UserCreateactionTypesInput {
+  set: [String!]
 }
 
-input UserCreateManyWithoutGroupsInput {
-  create: [UserCreateWithoutGroupsInput!]
-  connect: [UserWhereUniqueInput!]
+input UserCreateInput {
+  name: String!
+  identity: String!
+  auth0id: ID!
+  email: String!
+  avatar: String!
+  actionTypes: UserCreateactionTypesInput
+  privileges: PrivilegeCreateManyWithoutUsersInput
 }
 
 input UserCreateManyWithoutPrivilegesInput {
@@ -665,14 +451,13 @@ input UserCreateManyWithoutPrivilegesInput {
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateWithoutGroupsInput {
-  name: String!
-  privileges: PrivilegeCreateManyWithoutUsersInput
-}
-
 input UserCreateWithoutPrivilegesInput {
   name: String!
-  groups: GroupCreateManyWithoutUsersInput
+  identity: String!
+  auth0id: ID!
+  email: String!
+  avatar: String!
+  actionTypes: UserCreateactionTypesInput
 }
 
 """An edge in a connection."""
@@ -689,6 +474,14 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  identity_ASC
+  identity_DESC
+  auth0id_ASC
+  auth0id_DESC
+  email_ASC
+  email_DESC
+  avatar_ASC
+  avatar_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -698,6 +491,11 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   name: String!
+  actionTypes: [String!]!
+  identity: String!
+  auth0id: ID!
+  email: String!
+  avatar: String!
 }
 
 type UserSubscriptionPayload {
@@ -739,19 +537,18 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
-input UserUpdateInput {
-  name: String
-  privileges: PrivilegeUpdateManyWithoutUsersInput
-  groups: GroupUpdateManyWithoutUsersInput
+input UserUpdateactionTypesInput {
+  set: [String!]
 }
 
-input UserUpdateManyWithoutGroupsInput {
-  create: [UserCreateWithoutGroupsInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutGroupsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutGroupsInput!]
+input UserUpdateInput {
+  name: String
+  identity: String
+  auth0id: ID
+  email: String
+  avatar: String
+  actionTypes: UserUpdateactionTypesInput
+  privileges: PrivilegeUpdateManyWithoutUsersInput
 }
 
 input UserUpdateManyWithoutPrivilegesInput {
@@ -763,30 +560,18 @@ input UserUpdateManyWithoutPrivilegesInput {
   upsert: [UserUpsertWithWhereUniqueWithoutPrivilegesInput!]
 }
 
-input UserUpdateWithoutGroupsDataInput {
-  name: String
-  privileges: PrivilegeUpdateManyWithoutUsersInput
-}
-
 input UserUpdateWithoutPrivilegesDataInput {
   name: String
-  groups: GroupUpdateManyWithoutUsersInput
-}
-
-input UserUpdateWithWhereUniqueWithoutGroupsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutGroupsDataInput!
+  identity: String
+  auth0id: ID
+  email: String
+  avatar: String
+  actionTypes: UserUpdateactionTypesInput
 }
 
 input UserUpdateWithWhereUniqueWithoutPrivilegesInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutPrivilegesDataInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutGroupsInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutGroupsDataInput!
-  create: UserCreateWithoutGroupsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutPrivilegesInput {
@@ -884,14 +669,172 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  identity: String
+
+  """All values that are not equal to given value."""
+  identity_not: String
+
+  """All values that are contained in given list."""
+  identity_in: [String!]
+
+  """All values that are not contained in given list."""
+  identity_not_in: [String!]
+
+  """All values less than the given value."""
+  identity_lt: String
+
+  """All values less than or equal the given value."""
+  identity_lte: String
+
+  """All values greater than the given value."""
+  identity_gt: String
+
+  """All values greater than or equal the given value."""
+  identity_gte: String
+
+  """All values containing the given string."""
+  identity_contains: String
+
+  """All values not containing the given string."""
+  identity_not_contains: String
+
+  """All values starting with the given string."""
+  identity_starts_with: String
+
+  """All values not starting with the given string."""
+  identity_not_starts_with: String
+
+  """All values ending with the given string."""
+  identity_ends_with: String
+
+  """All values not ending with the given string."""
+  identity_not_ends_with: String
+  auth0id: ID
+
+  """All values that are not equal to given value."""
+  auth0id_not: ID
+
+  """All values that are contained in given list."""
+  auth0id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  auth0id_not_in: [ID!]
+
+  """All values less than the given value."""
+  auth0id_lt: ID
+
+  """All values less than or equal the given value."""
+  auth0id_lte: ID
+
+  """All values greater than the given value."""
+  auth0id_gt: ID
+
+  """All values greater than or equal the given value."""
+  auth0id_gte: ID
+
+  """All values containing the given string."""
+  auth0id_contains: ID
+
+  """All values not containing the given string."""
+  auth0id_not_contains: ID
+
+  """All values starting with the given string."""
+  auth0id_starts_with: ID
+
+  """All values not starting with the given string."""
+  auth0id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  auth0id_ends_with: ID
+
+  """All values not ending with the given string."""
+  auth0id_not_ends_with: ID
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  avatar: String
+
+  """All values that are not equal to given value."""
+  avatar_not: String
+
+  """All values that are contained in given list."""
+  avatar_in: [String!]
+
+  """All values that are not contained in given list."""
+  avatar_not_in: [String!]
+
+  """All values less than the given value."""
+  avatar_lt: String
+
+  """All values less than or equal the given value."""
+  avatar_lte: String
+
+  """All values greater than the given value."""
+  avatar_gt: String
+
+  """All values greater than or equal the given value."""
+  avatar_gte: String
+
+  """All values containing the given string."""
+  avatar_contains: String
+
+  """All values not containing the given string."""
+  avatar_not_contains: String
+
+  """All values starting with the given string."""
+  avatar_starts_with: String
+
+  """All values not starting with the given string."""
+  avatar_not_starts_with: String
+
+  """All values ending with the given string."""
+  avatar_ends_with: String
+
+  """All values not ending with the given string."""
+  avatar_not_ends_with: String
   privileges_every: PrivilegeWhereInput
   privileges_some: PrivilegeWhereInput
   privileges_none: PrivilegeWhereInput
-  groups_every: GroupWhereInput
-  groups_some: GroupWhereInput
-  groups_none: GroupWhereInput
 }
 
 input UserWhereUniqueInput {
   id: ID
+  auth0id: ID
 }

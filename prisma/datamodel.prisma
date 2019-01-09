@@ -2,21 +2,19 @@ type User {
   id: ID! @unique
   name: String!
   privileges: [Privilege!]!
-  groups: [Group!]!
+  actionTypes: [String!]!
+  identity: String!,
+  auth0id: ID! @unique,
+  email: String!,
+  avatar: String!
+
 }
 
 type Privilege {
   id: ID! @unique
   name: String! 
-  groups: [Group!]!
   users: [User!]!
+  actionTypes: [String!]!
+  privileges: [Privilege!]! @relation(name: "PrivilegeRelationship")
+  parent: Privilege @relation(name: "PrivilegeRelationship")
 }
-
-type Group {
-  id: ID! @unique
-  name: String!
-  users: [User!]!
-  privileges: [Privilege!]!
-}
-
-
