@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Dec 19 2018 17:46:08 GMT+0100 (CET)
+# timestamp: Mon Jan 14 2019 15:01:01 GMT+0100 (CET)
 
 type AggregatePrivilege {
   count: Int!
@@ -413,7 +413,7 @@ type Subscription {
 
 type User implements Node {
   id: ID!
-  name: String!
+  username: String!
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege!]
   actionTypes: [String!]!
   identity: String!
@@ -437,7 +437,7 @@ input UserCreateactionTypesInput {
 }
 
 input UserCreateInput {
-  name: String!
+  username: String!
   identity: String!
   auth0id: ID!
   email: String!
@@ -452,7 +452,7 @@ input UserCreateManyWithoutPrivilegesInput {
 }
 
 input UserCreateWithoutPrivilegesInput {
-  name: String!
+  username: String!
   identity: String!
   auth0id: ID!
   email: String!
@@ -472,8 +472,8 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  username_ASC
+  username_DESC
   identity_ASC
   identity_DESC
   auth0id_ASC
@@ -490,7 +490,7 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
-  name: String!
+  username: String!
   actionTypes: [String!]!
   identity: String!
   auth0id: ID!
@@ -542,7 +542,7 @@ input UserUpdateactionTypesInput {
 }
 
 input UserUpdateInput {
-  name: String
+  username: String
   identity: String
   auth0id: ID
   email: String
@@ -561,7 +561,7 @@ input UserUpdateManyWithoutPrivilegesInput {
 }
 
 input UserUpdateWithoutPrivilegesDataInput {
-  name: String
+  username: String
   identity: String
   auth0id: ID
   email: String
@@ -629,46 +629,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+  username: String
 
   """All values that are not equal to given value."""
-  name_not: String
+  username_not: String
 
   """All values that are contained in given list."""
-  name_in: [String!]
+  username_in: [String!]
 
   """All values that are not contained in given list."""
-  name_not_in: [String!]
+  username_not_in: [String!]
 
   """All values less than the given value."""
-  name_lt: String
+  username_lt: String
 
   """All values less than or equal the given value."""
-  name_lte: String
+  username_lte: String
 
   """All values greater than the given value."""
-  name_gt: String
+  username_gt: String
 
   """All values greater than or equal the given value."""
-  name_gte: String
+  username_gte: String
 
   """All values containing the given string."""
-  name_contains: String
+  username_contains: String
 
   """All values not containing the given string."""
-  name_not_contains: String
+  username_not_contains: String
 
   """All values starting with the given string."""
-  name_starts_with: String
+  username_starts_with: String
 
   """All values not starting with the given string."""
-  name_not_starts_with: String
+  username_not_starts_with: String
 
   """All values ending with the given string."""
-  name_ends_with: String
+  username_ends_with: String
 
   """All values not ending with the given string."""
-  name_not_ends_with: String
+  username_not_ends_with: String
   identity: String
 
   """All values that are not equal to given value."""

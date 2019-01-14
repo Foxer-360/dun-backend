@@ -15,13 +15,19 @@ import {
 } from './resolvers';
 
 import {
+  createUser,
+  deleteUser,
+  getUsers,
+} from './resolvers/user';
+
+import {
   validateAndParseIdToken,
   createPrismaUser,
 } from './helpers';
 
 const resolvers = {
   Query: {
-    users: forwardTo('db'),
+    users: getUsers,
     privileges: forwardTo('db'),
     hasUserPermission,
     actionTypes,
@@ -43,9 +49,9 @@ const resolvers = {
     },
     createPrivilege: forwardTo('db'),
     updatePrivilege: forwardTo('db'),
-    createUser: forwardTo('db'),
+    createUser,
     updateUser: forwardTo('db'),
-    deleteUser: forwardTo('db'),
+    deleteUser,
   },
 };
 
@@ -82,4 +88,4 @@ server.express.post(
 );
 
 // eslint-disable-next-line no-console
-server.start(() => console.log(`GraphQL server is running on http://localhost:${process.env.PRISMA_ENDPOINT}`));
+server.start(() => console.log(`GraphQL server is running on http://localhost:${process.env.PORT}`));
