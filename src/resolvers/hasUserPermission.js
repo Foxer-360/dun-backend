@@ -16,7 +16,7 @@ export default async (parent, { token, isUserAnonymous, gqlOperation }, context)
     actionTypes
     avatar
   }`;
-
+  const permittedSelections = ['__schema'];
   if (isUserAnonymous) {
     user = await context.db.query.user({ where: { auth0id: 'ANONYMOUS' } }, userQuery);
   } else {
@@ -31,19 +31,26 @@ export default async (parent, { token, isUserAnonymous, gqlOperation }, context)
 
     user = await context.db.query.user({ where: { auth0id } }, userQuery);
   }
-  // Checking based on request token, if is action permitted to user
+
+  if (gqlOperation.selectionSet.selections.length === 1
+    && gqlOperation.selectionSet.selections
+      .some(selection => permittedSelections.includes(selection.name.value))
+  ) {
+    return true;
+  }
   if (user
     && !gqlOperation.selectionSet.selections
       .some(selection => !user.actionTypes
-        .includes(selection.name.value))) {
+        .includes(selection.name.value))
+  ) {
     return true;
   }
 
   // Checking based on request token, if is action permitted to some privilege of user
   if (user
     && !gqlOperation.selectionSet.selections
-      .some(selection => !user.privileges.some(privilege => privilege.actionTypes
-        .includes(selection.name.value)))) {
+      .some(selection => !(user.privileges.some(privilege => privilege.actionTypes
+        .includes(selection.name.value) || permittedSelections.includes(selection.name.value))))) {
     return true;
   }
 

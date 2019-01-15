@@ -97,7 +97,7 @@ const server = new GraphQLServer({
       if (hasPermission) {
         return resolve(root, args, context, info);
       }
-      throw new Error(`User hasn't permission for ${gqlOperation.selectionSet.selections.map(selection => selection.name.value)}`);
+      throw new Error(`User hasn\'t permission for ${gqlOperation.selectionSet.selections.map(selection => selection.name.value)}`);
     },
   ],
 });
