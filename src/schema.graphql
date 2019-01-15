@@ -15,6 +15,17 @@ input UserCreateInput {
   privileges: PrivilegeCreateManyWithoutUsersInput
 }
 
+input UserUpdateInput {
+  username: String
+  identity: String
+  password: String
+  auth0id: ID
+  email: String
+  avatar: String
+  actionTypes: UserUpdateactionTypesInput
+  privileges: PrivilegeUpdateManyWithoutUsersInput
+}
+
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   privileges(where: PrivilegeWhereInput, orderBy: PrivilegeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Privilege]!
@@ -26,6 +37,7 @@ type Mutation {
   authenticate(idToken: String!): User
   createPrivilege(data: PrivilegeCreateInput!): Privilege!
   updatePrivilege(data: PrivilegeUpdateInput!, where: PrivilegeWhereUniqueInput!): Privilege
+  deletePrivilege(where: PrivilegeWhereUniqueInput!): Privilege
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteUser(id: ID!): User

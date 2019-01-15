@@ -49,6 +49,7 @@ const resolvers = {
     },
     createPrivilege: forwardTo('db'),
     updatePrivilege: forwardTo('db'),
+    deletePrivilege: forwardTo('db'),
     createUser,
     updateUser: forwardTo('db'),
     deleteUser,
@@ -68,6 +69,36 @@ const server = new GraphQLServer({
     db,
   }),
   middlewares: [
+    async (resolve, root, args, context, info) => {
+      const { operation: gqlOperation } = info;
+      const authorizationToken = (
+        context
+        && context.headers
+        && context.headers.authorization
+      ) || (
+        context
+        && context.request
+        && context.request.headers
+        && context.request.headers.authorization
+      );
+ 
+      const token = authorizationToken && authorizationToken.includes('Bearer ')
+        ? authorizationToken.replace('Bearer ', '')
+        : authorizationToken;
+
+      const hasPermission = await hasUserPermission(
+        null,
+        {
+          ...(token ? { token } : { isUserAnonymous: true }),
+          gqlOperation,
+        },
+        context,
+      );
+      if (hasPermission) {
+        return resolve(root, args, context, info);
+      }
+      throw new Error(`User hasn't permission for ${gqlOperation.selectionSet.selections.map(selection => selection.name.value)}`);
+    },
   ],
 });
 

@@ -7,7 +7,7 @@ export default async (parent, { token, isUserAnonymous, gqlOperation }, context)
   let user = null;
   const userQuery = `{
     id
-    name
+    username
     privileges {
       id
       name

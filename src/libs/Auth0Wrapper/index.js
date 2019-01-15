@@ -55,6 +55,13 @@ class Auth0Wrapper {
   deleteUser(id) {
     return request.delete(`${process.env.AUTH0_API_URL}/api/v2/users/${id}`, this.createOptions());
   }
+
+  updateUser(userData, id) {
+    return request.patch(`${process.env.AUTH0_API_URL}/api/v2/users/${id}`, this.createOptions({
+      ...userData,
+      connection: 'Username-Password-Authentication',
+    }));
+  }
 }
 
 export default Auth0Wrapper;
