@@ -1,8 +1,29 @@
 # import * from './generated/prisma.graphql'
 
+scalar Json
+
 type ActionTypes {
   authorizationApiTypes: [String!]!
   externalApiTypes: [String!]!
+}
+
+input UserCreateInput {
+  email: String!
+  username: String!
+  password: String!
+  actionTypes: UserCreateactionTypesInput
+  privileges: PrivilegeCreateManyWithoutUsersInput
+}
+
+input UserUpdateInput {
+  username: String
+  identity: String
+  password: String
+  auth0id: ID
+  email: String
+  avatar: String
+  actionTypes: UserUpdateactionTypesInput
+  privileges: PrivilegeUpdateManyWithoutUsersInput
 }
 
 type Query {
@@ -16,7 +37,8 @@ type Mutation {
   authenticate(idToken: String!): User
   createPrivilege(data: PrivilegeCreateInput!): Privilege!
   updatePrivilege(data: PrivilegeUpdateInput!, where: PrivilegeWhereUniqueInput!): Privilege
+  deletePrivilege(where: PrivilegeWhereUniqueInput!): Privilege
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteUser(where: UserWhereUniqueInput!): User
+  deleteUser(id: ID!): User
 }

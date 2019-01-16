@@ -3,7 +3,7 @@ export default async function (ctx, idToken) {
     data: {
       identity: idToken.sub.split('|')[0],
       auth0id: idToken.sub.split('|')[1],
-      name: idToken.name,
+      username: idToken.nickname,
       email: idToken.email,
       avatar: idToken.picture,
     },
