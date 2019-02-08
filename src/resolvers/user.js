@@ -15,6 +15,7 @@ const createPrismaUserFromAuth0 = async (context, auth0User, actionTypes, privil
   {
     id
     username
+    email
     privileges {
       id
       name
@@ -45,7 +46,7 @@ const createUser = async (
   try {
     const auth0User = await auth0Wrapper.createUser(email, username, password);
 
-    const user = createPrismaUserFromAuth0(context, auth0User, privileges, actionTypes);
+    const user = createPrismaUserFromAuth0(context, auth0User, actionTypes, privileges);
     return user;
   } catch (e) {
     throw e;
